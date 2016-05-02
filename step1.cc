@@ -57,6 +57,7 @@ void step1::Loop()
    inputTree->SetBranchStatus("event_CommonCalc",1);
    inputTree->SetBranchStatus("run_CommonCalc",1);
    inputTree->SetBranchStatus("lumi_CommonCalc",1);
+   inputTree->SetBranchStatus("MCWeight_singleLepCalc",1);
    
    //electrons
    inputTree->SetBranchStatus("elPt_singleLepCalc",1);
@@ -84,31 +85,58 @@ void step1::Loop()
    inputTree->SetBranchStatus("AK4JetPhi_singleLepCalc",1);
    inputTree->SetBranchStatus("AK4JetEnergy_singleLepCalc",1);
    
+	//triggers
+   inputTree->SetBranchStatus("vsSelMCTriggersEl_singleLepCalc",1);
+   inputTree->SetBranchStatus("viSelMCTriggersEl_singleLepCalc",1);
+   inputTree->SetBranchStatus("vsSelMCTriggersMu_singleLepCalc",1);
+   inputTree->SetBranchStatus("viSelMCTriggersMu_singleLepCalc",1);
+   inputTree->SetBranchStatus("vsSelTriggersEl_singleLepCalc",1);
+   inputTree->SetBranchStatus("viSelTriggersEl_singleLepCalc",1);
+   inputTree->SetBranchStatus("vsSelTriggersMu_singleLepCalc",1);
+   inputTree->SetBranchStatus("viSelTriggersMu_singleLepCalc",1);
    
+   
+   double ptbins[6] = {25,35,50,75,100,500};
+   double etabinsEl[5] = {0,0.8,1.442,2.1,2.4};
+   double etabinsMu[5] = {0,0.8,1.2,2.1,2.4};
    // OUTPUT FILE
    outputFile->cd();
+   NTotalSLPassed = new TH1D("NTotalSLPassed","",3,0,3);
    NLooseTightEl = new TH1D("NLooseTightEl","",2,0,2);
    NLooseTightMu = new TH1D("NLooseTightMu","",2,0,2);
-   LooseTightEl_pt = new TH1D("LooseTightEl_pt","",300,0,300);
-   LooseTightMu_pt = new TH1D("LooseTightMu_pt","",300,0,300);
-   TightEl_pt = new TH1D("TightEl_pt","",300,0,300);
-   TightMu_pt = new TH1D("TightMu_pt","",300,0,300);
-   NLooseTightEl_pt25_35 = new TH1D("NLooseTightEl_pt25_35","",2,0,2);
-   NLooseTightMu_pt25_35 = new TH1D("NLooseTightMu_pt25_35","",2,0,2);
-   NLooseTightEl_pt35_50 = new TH1D("NLooseTightEl_pt35_50","",2,0,2);
-   NLooseTightMu_pt35_50 = new TH1D("NLooseTightMu_pt35_50","",2,0,2);
-   NLooseTightEl_pt50_75 = new TH1D("NLooseTightEl_pt50_75","",2,0,2);
-   NLooseTightMu_pt50_75 = new TH1D("NLooseTightMu_pt50_75","",2,0,2);
-   NLooseTightEl_pt75_100 = new TH1D("NLooseTightEl_pt75_100","",2,0,2);
-   NLooseTightMu_pt75_100 = new TH1D("NLooseTightMu_pt75_100","",2,0,2);
-   NLooseTightEl_pt100_Inf = new TH1D("NLooseTightEl_pt100_Inf","",2,0,2);
-   NLooseTightMu_pt100_Inf = new TH1D("NLooseTightMu_pt100_Inf","",2,0,2);
+   NLooseEl_Pt = new TH1D("NLooseEl_Pt","",5,ptbins);
+   NLooseMu_Pt = new TH1D("NLooseMu_Pt","",5,ptbins);
+   NLooseEl_Eta = new TH1D("NLooseEl_Eta","",4,etabinsEl);
+   NLooseMu_Eta = new TH1D("NLooseMu_Eta","",4,etabinsMu);
+   NLooseEl_PtEta = new TH2D("NLooseEl_PtEta","",5,ptbins,4,etabinsEl);
+   NLooseMu_PtEta = new TH2D("NLooseMu_PtEta","",5,ptbins,4,etabinsMu);
+   NTightEl_Pt = new TH1D("NTightEl_Pt","",5,ptbins);
+   NTightMu_Pt = new TH1D("NTightMu_Pt","",5,ptbins);
+   NTightEl_Eta = new TH1D("NTightEl_Eta","",4,etabinsEl);
+   NTightMu_Eta = new TH1D("NTightMu_Eta","",4,etabinsMu);
+   NTightEl_PtEta = new TH2D("NTightEl_PtEta","",5,ptbins,4,etabinsEl);
+   NTightMu_PtEta = new TH2D("NTightMu_PtEta","",5,ptbins,4,etabinsMu);
 
+   NTotalSLPassed->Sumw2();
+   NLooseTightEl->Sumw2();
+   NLooseTightMu->Sumw2();
+   NLooseEl_Pt->Sumw2();
+   NLooseMu_Pt->Sumw2();
+   NLooseEl_Eta->Sumw2();
+   NLooseMu_Eta->Sumw2();
+   NLooseEl_PtEta->Sumw2();
+   NLooseMu_PtEta->Sumw2();
+   NTightEl_Pt->Sumw2();
+   NTightMu_Pt->Sumw2();
+   NTightEl_Eta->Sumw2();
+   NTightMu_Eta->Sumw2();
+   NTightEl_PtEta->Sumw2();
+   NTightMu_PtEta->Sumw2();
    
    // basic cuts
    float metCut=25;
    float lepPtMin=25;
-//    float lepPtMax=35;
+   float lepPtMax=9.9e12;
       
    //read CSC bad event filter file
    vector <int> CSC_run;
@@ -193,10 +221,9 @@ void step1::Loop()
       nb = inputTree->GetEntry(jentry);   nbytes += nb;
       if (Cut(ientry) != 1) continue;
       
-      //      if (ientry > 5000) continue;
+      //if (ientry > 5000) continue;
       
       if(jentry % 1000 ==0) std::cout<<"Completed "<<jentry<<" out of "<<nentries<<" events"<<std::endl;
-
 
       //CSC filter (aka muon halo filter) NOTE: filtering data sets by running both SE and SM CSC filters!
       bool filterEvent = false;
@@ -207,6 +234,10 @@ void step1::Loop()
       	if(ECALSC_run[i]==run_CommonCalc && ECALSC_ls[i]==lumi_CommonCalc && ECALSC_event[i]==event_CommonCalc) filterEvent = true;
       }
       if(filterEvent) continue;
+
+      double weight = MCWeight_singleLepCalc/fabs(MCWeight_singleLepCalc);
+
+      NTotalSLPassed->Fill(0.0,weight);
      	     
       int isE = 0;
       int isM = 0;
@@ -216,30 +247,38 @@ void step1::Loop()
       double elMiniIso = -1;
       double elMVAValue = -1;
       
+      bool isLepPassLepTrig = false;
+      
       lepton_lv.SetPtEtaPhiM(0,0,0,0);
 
       for(unsigned int iel = 0; iel < elPt_singleLepCalc->size(); iel++){
-		if(elPt_singleLepCalc->at(iel) >= lepPtMin){
+		if(elPt_singleLepCalc->at(iel) >= lepPtMin && elPt_singleLepCalc->at(iel) <= lepPtMax){
 		  isE++;
 		  leplvSetsCheck++;
 		  lepton_lv.SetPtEtaPhiM(elPt_singleLepCalc->at(iel),elEta_singleLepCalc->at(iel),elPhi_singleLepCalc->at(iel),0.00051099891);
 		  elMiniIso = elMiniIso_singleLepCalc->at(iel);
 		  elMVAValue = elMVAValue_singleLepCalc->at(iel);
+		  if(viSelMCTriggersEl_singleLepCalc-at(iel)>0) isLepPassLepTrig= true; //only for MC?
 		}
       }
       for(unsigned int imu = 0; imu < muPt_singleLepCalc->size(); imu++){
-		if(muPt_singleLepCalc->at(imu) >= lepPtMin){
+		if(muPt_singleLepCalc->at(imu) >= lepPtMin && muPt_singleLepCalc->at(imu) <= lepPtMax){
 		  isM++;
 		  leplvSetsCheck++;
 		  lepton_lv.SetPtEtaPhiM(muPt_singleLepCalc->at(imu),muEta_singleLepCalc->at(imu),muPhi_singleLepCalc->at(imu),0.105658367);
 		  muIsTight = muIsTight_singleLepCalc->at(imu);
 		  muMiniIso = muMiniIso_singleLepCalc->at(imu);
+		  if(viSelMCTriggersMu_singleLepCalc-at(imu)>0) isLepPassLepTrig= true; //only for MC??
 		}
       }
 
       if(isE > 0 && isM > 0) continue;
       if(isE == 0 && isM == 0) continue;
       if(isE > 1 || isM > 1) continue;
+      
+      if(isLepPassLepTrig==false) continue; // check if ele pass ele trig, mu pass mu trig.
+
+      NTotalSLPassed->Fill(1.0,weight);
 
       if(leplvSetsCheck != 1) cout << "lepton_lv was set more than once, something's wrong" << endl;
 
@@ -248,12 +287,12 @@ void step1::Loop()
       bool hasLepJetZ = false;
       bool hasAwayJet = false;
       for(unsigned int ijet=0; ijet < AK4JetPt_singleLepCalc->size(); ijet++){
-		jet_lv.SetPtEtaPhiE(AK4JetPt_singleLepCalc->at(ijet),AK4JetEta_singleLepCalc->at(ijet),AK4JetPhi_singleLepCalc->at(ijet),AK4JetEnergy_singleLepCalc->at(ijet));
+	jet_lv.SetPtEtaPhiE(AK4JetPt_singleLepCalc->at(ijet),AK4JetEta_singleLepCalc->at(ijet),AK4JetPhi_singleLepCalc->at(ijet),AK4JetEnergy_singleLepCalc->at(ijet));
 
-		if(lepton_lv.DeltaR(jet_lv) > 1.0) hasAwayJet = true;
+	if(lepton_lv.DeltaR(jet_lv) > 1.0) hasAwayJet = true;
 
-		double MlepJet = (lepton_lv + jet_lv).M();
-		if(MlepJet > 81 && MlepJet < 101) hasLepJetZ = true;
+	double MlepJet = (lepton_lv + jet_lv).M();
+	if(MlepJet > 81 && MlepJet < 101) hasLepJetZ = true;
 
       }
 
@@ -273,6 +312,8 @@ void step1::Loop()
       if(!(isPastMETcut && isPastJetsCut && isPastLepPtCut && isPastMTCut)) continue;
       npass_all+=1;
 
+      NTotalSLPassed->Fill(2.0,weight);
+
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       /////////////// ONLY ON SELECTED EVENTS ////////////////////////////////////////////////////////////////////////////////////
@@ -283,57 +324,41 @@ void step1::Loop()
       bool isTightMu = false;
       if(isE){
 		if(elMiniIso < 0.1){
-			  if(fabs(lepton_lv.Eta()) <= 0.8 && elMVAValue > 0.967083) isTightEl = true;
-			  else if(fabs(lepton_lv.Eta()) <= 1.479 && elMVAValue > 0.929117) isTightEl = true;
-			  else if(fabs(lepton_lv.Eta()) <= 2.5 && elMVAValue > 0.726311) isTightEl = true;
-			}
+		  if(fabs(lepton_lv.Eta()) <= 0.8 && elMVAValue > 0.967083) isTightEl = true;
+		  else if(fabs(lepton_lv.Eta()) <= 1.479 && elMVAValue > 0.929117) isTightEl = true;
+		  else if(fabs(lepton_lv.Eta()) <= 2.5 && elMVAValue > 0.726311) isTightEl = true;
+		}
       }
 
       if(isM){
 		if(muIsTight > 0 && muMiniIso < 0.2) isTightMu = true;
       }
 
+      double leppt = lepton_lv.Pt();
+      if(leppt >= 500) leppt = 490;
+
       if(isE){
-		NLooseTightEl->Fill(0);
-		if(lepton_lv.Pt()>=25 && lepton_lv.Pt()<35) NLooseTightEl_pt25_35->Fill(0);
-		if(lepton_lv.Pt()>=35 && lepton_lv.Pt()<50) NLooseTightEl_pt35_50->Fill(0);
-		if(lepton_lv.Pt()>=50 && lepton_lv.Pt()<75) NLooseTightEl_pt50_75->Fill(0);
-		if(lepton_lv.Pt()>=75 && lepton_lv.Pt()<100) NLooseTightEl_pt75_100->Fill(0);
-		if(lepton_lv.Pt()>=100) NLooseTightEl_pt100_Inf->Fill(0);
-
-		LooseTightEl_pt->Fill(lepton_lv.Pt());
-
-		if(isTightEl){ 
-			NLooseTightEl->Fill(1);
-			if(lepton_lv.Pt()>=25 && lepton_lv.Pt()<35) NLooseTightEl_pt25_35->Fill(1);
-			if(lepton_lv.Pt()>=35 && lepton_lv.Pt()<50) NLooseTightEl_pt35_50->Fill(1);
-			if(lepton_lv.Pt()>=50 && lepton_lv.Pt()<75) NLooseTightEl_pt50_75->Fill(1);
-			if(lepton_lv.Pt()>=75 && lepton_lv.Pt()<100) NLooseTightEl_pt75_100->Fill(1);
-			if(lepton_lv.Pt()>=100) NLooseTightEl_pt100_Inf->Fill(1);
-
-			TightEl_pt->Fill(lepton_lv.Pt());		
+		NLooseTightEl->Fill(0.0,weight);
+		NLooseEl_Pt->Fill(leppt,weight);
+		NLooseEl_Eta->Fill(fabs(lepton_lv.Eta()),weight);
+		NLooseEl_PtEta->Fill(leppt,fabs(lepton_lv.Eta()),weight);
+		if(isTightEl){
+		  NLooseTightEl->Fill(1.0,weight);
+		  NTightEl_Pt->Fill(leppt,weight);
+		  NTightEl_Eta->Fill(fabs(lepton_lv.Eta()),weight);
+		  NTightEl_PtEta->Fill(leppt,fabs(lepton_lv.Eta()),weight);
 		}
       }
-
       if(isM){
-		NLooseTightMu->Fill(0);
-		if(lepton_lv.Pt()>=25 && lepton_lv.Pt()<35) NLooseTightMu_pt25_35->Fill(0);
-		if(lepton_lv.Pt()>=35 && lepton_lv.Pt()<50) NLooseTightMu_pt35_50->Fill(0);
-		if(lepton_lv.Pt()>=50 && lepton_lv.Pt()<75) NLooseTightMu_pt50_75->Fill(0);
-		if(lepton_lv.Pt()>=75 && lepton_lv.Pt()<100) NLooseTightMu_pt75_100->Fill(0);
-		if(lepton_lv.Pt()>=100) NLooseTightMu_pt100_Inf->Fill(0);
-
-		LooseTightMu_pt->Fill(lepton_lv.Pt());
-
-		if(isTightMu){ 
-			NLooseTightMu->Fill(1);
-			if(lepton_lv.Pt()>=25 && lepton_lv.Pt()<35) NLooseTightMu_pt25_35->Fill(1);
-			if(lepton_lv.Pt()>=35 && lepton_lv.Pt()<50) NLooseTightMu_pt35_50->Fill(1);
-			if(lepton_lv.Pt()>=50 && lepton_lv.Pt()<75) NLooseTightMu_pt50_75->Fill(1);
-			if(lepton_lv.Pt()>=75 && lepton_lv.Pt()<100) NLooseTightMu_pt75_100->Fill(1);
-			if(lepton_lv.Pt()>=100) NLooseTightMu_pt100_Inf->Fill(1);
-
-			TightMu_pt->Fill(lepton_lv.Pt());		
+		NLooseTightMu->Fill(0.0,weight);
+		NLooseMu_Pt->Fill(leppt,weight);
+		NLooseMu_Eta->Fill(fabs(lepton_lv.Eta()),weight);
+		NLooseMu_PtEta->Fill(leppt,fabs(lepton_lv.Eta()),weight);
+		if(isTightMu){
+		  NLooseTightMu->Fill(1.0,weight);
+		  NTightMu_Pt->Fill(leppt,weight);
+		  NTightMu_Eta->Fill(fabs(lepton_lv.Eta()),weight);
+		  NTightMu_PtEta->Fill(leppt,fabs(lepton_lv.Eta()),weight);
 		}
       }
    }
@@ -344,22 +369,19 @@ void step1::Loop()
    std::cout<<"Npassed_ALL            = "<<npass_all<<" / "<<nentries<<std::endl;
 
    NLooseTightEl->Write();
-   LooseTightEl_pt->Write();
-   TightEl_pt->Write();
-   NLooseTightEl_pt25_35->Write();
-   NLooseTightEl_pt35_50->Write();
-   NLooseTightEl_pt50_75->Write();
-   NLooseTightEl_pt75_100->Write();
-   NLooseTightEl_pt100_Inf->Write();
-
    NLooseTightMu->Write();
-   LooseTightMu_pt->Write();
-   TightMu_pt->Write();
-   NLooseTightMu_pt25_35->Write();
-   NLooseTightMu_pt35_50->Write();
-   NLooseTightMu_pt50_75->Write();
-   NLooseTightMu_pt75_100->Write();
-   NLooseTightMu_pt100_Inf->Write();
-
+   NLooseEl_Pt->Write();
+   NLooseEl_Eta->Write();
+   NLooseEl_PtEta->Write();
+   NLooseMu_Pt->Write();
+   NLooseMu_Eta->Write();
+   NLooseMu_PtEta->Write();
+   NTightEl_Pt->Write();
+   NTightEl_Eta->Write();
+   NTightEl_PtEta->Write();
+   NTightMu_Pt->Write();
+   NTightMu_Eta->Write();
+   NTightMu_PtEta->Write();
+   NTotalSLPassed->Write();
 
 }

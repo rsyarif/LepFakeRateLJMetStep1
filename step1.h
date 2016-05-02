@@ -13,6 +13,7 @@
 #include <TChain.h>
 #include <TFile.h>
 #include "TH1.h"
+#include "TH2.h"
 
 // Header file for the classes stored in the TTree if any.
 #include "vector"
@@ -28,23 +29,21 @@ public :
    TFile          *filedataOverMChists;
 
    TH1D           *NLooseTightEl;
-   TH1D           *LooseTightEl_pt;
-   TH1D           *TightEl_pt;
-   TH1D           *NLooseTightEl_pt25_35;
-   TH1D           *NLooseTightEl_pt35_50;
-   TH1D           *NLooseTightEl_pt50_75;
-   TH1D           *NLooseTightEl_pt75_100;
-   TH1D           *NLooseTightEl_pt100_Inf;
-
    TH1D           *NLooseTightMu;
-   TH1D           *LooseTightMu_pt;
-   TH1D           *TightMu_pt;
-   TH1D           *NLooseTightMu_pt25_35;
-   TH1D           *NLooseTightMu_pt35_50;
-   TH1D           *NLooseTightMu_pt50_75;
-   TH1D           *NLooseTightMu_pt75_100;
-   TH1D           *NLooseTightMu_pt100_Inf;
-   
+   TH1D           *NLooseEl_Pt;
+   TH1D           *NLooseMu_Pt;
+   TH1D           *NLooseEl_Eta;
+   TH1D           *NLooseMu_Eta;
+   TH2D           *NLooseEl_PtEta;
+   TH2D           *NLooseMu_PtEta;
+   TH1D           *NTightEl_Pt;
+   TH1D           *NTightMu_Pt;
+   TH1D           *NTightEl_Eta;
+   TH1D           *NTightMu_Eta;
+   TH2D           *NTightEl_PtEta;
+   TH2D           *NTightMu_PtEta;
+   TH1D           *NTotalSLPassed;
+
    Bool_t          MistagSFup;
    Bool_t          MistagSFdn;
    Bool_t          isSig;
