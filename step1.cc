@@ -223,7 +223,7 @@ void step1::Loop()
       
       //if (ientry > 5000) continue;
       
-      if(jentry % 1000 ==0) std::cout<<"Completed "<<jentry<<" out of "<<nentries<<" events"<<std::endl;
+      if(jentry % 10 ==0) std::cout<<"Completed "<<jentry<<" out of "<<nentries<<" events"<<std::endl;
 
       //CSC filter (aka muon halo filter) NOTE: filtering data sets by running both SE and SM CSC filters!
       bool filterEvent = false;
@@ -247,7 +247,7 @@ void step1::Loop()
       double elMiniIso = -1;
       double elMVAValue = -1;
       
-      bool isLepPassLepTrig = false;
+      bool isMCLepPassLepTrig = false;
       
       lepton_lv.SetPtEtaPhiM(0,0,0,0);
 
@@ -258,7 +258,7 @@ void step1::Loop()
 		  lepton_lv.SetPtEtaPhiM(elPt_singleLepCalc->at(iel),elEta_singleLepCalc->at(iel),elPhi_singleLepCalc->at(iel),0.00051099891);
 		  elMiniIso = elMiniIso_singleLepCalc->at(iel);
 		  elMVAValue = elMVAValue_singleLepCalc->at(iel);
-		  if(viSelMCTriggersEl_singleLepCalc-at(iel)>0) isLepPassLepTrig= true; //only for MC?
+		  if(isMC && viSelMCTriggersEl_singleLepCalc->at(iel)>0) isMCLepPassLepTrig= true; //only for MC?
 		}
       }
       for(unsigned int imu = 0; imu < muPt_singleLepCalc->size(); imu++){
@@ -268,7 +268,7 @@ void step1::Loop()
 		  lepton_lv.SetPtEtaPhiM(muPt_singleLepCalc->at(imu),muEta_singleLepCalc->at(imu),muPhi_singleLepCalc->at(imu),0.105658367);
 		  muIsTight = muIsTight_singleLepCalc->at(imu);
 		  muMiniIso = muMiniIso_singleLepCalc->at(imu);
-		  if(viSelMCTriggersMu_singleLepCalc-at(imu)>0) isLepPassLepTrig= true; //only for MC??
+		  if(isMC && viSelMCTriggersMu_singleLepCalc->at(imu)>0) isMCLepPassLepTrig= true; //only for MC??
 		}
       }
 
@@ -276,7 +276,7 @@ void step1::Loop()
       if(isE == 0 && isM == 0) continue;
       if(isE > 1 || isM > 1) continue;
       
-      if(isLepPassLepTrig==false) continue; // check if ele pass ele trig, mu pass mu trig.
+      if(isMC && isMCLepPassLepTrig==false) continue; // check if ele pass ele trig, mu pass mu trig.
 
       NTotalSLPassed->Fill(1.0,weight);
 
