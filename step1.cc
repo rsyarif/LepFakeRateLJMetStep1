@@ -258,7 +258,6 @@ void step1::Loop()
 		  lepton_lv.SetPtEtaPhiM(elPt_singleLepCalc->at(iel),elEta_singleLepCalc->at(iel),elPhi_singleLepCalc->at(iel),0.00051099891);
 		  elMiniIso = elMiniIso_singleLepCalc->at(iel);
 		  elMVAValue = elMVAValue_singleLepCalc->at(iel);
-		  if(isMC && viSelMCTriggersEl_singleLepCalc->at(iel)>0) isMCLepPassLepTrig= true; //only for MC?
 		}
       }
       for(unsigned int imu = 0; imu < muPt_singleLepCalc->size(); imu++){
@@ -268,14 +267,31 @@ void step1::Loop()
 		  lepton_lv.SetPtEtaPhiM(muPt_singleLepCalc->at(imu),muEta_singleLepCalc->at(imu),muPhi_singleLepCalc->at(imu),0.105658367);
 		  muIsTight = muIsTight_singleLepCalc->at(imu);
 		  muMiniIso = muMiniIso_singleLepCalc->at(imu);
-		  if(isMC && viSelMCTriggersMu_singleLepCalc->at(imu)>0) isMCLepPassLepTrig= true; //only for MC??
 		}
       }
 
       if(isE > 0 && isM > 0) continue;
       if(isE == 0 && isM == 0) continue;
-      if(isE > 1 || isM > 1) continue;
-      
+      if(isE > 1 || isM > 1) continue;      
+            
+      if(isE){
+      	for(unsigned int itrig=0; itrig < vsSelMCTriggersEl_singleLepCalc->size(); itrig++){      			
+				if( viSelMCTriggersEl_singleLepCalc->at(itrig) >0 ){ 
+					isMCLepPassLepTrig=true;
+					std::cout << "Electron: pass trigger: " << vsSelMCTriggersEl_singleLepCalc->at(itrig) <<std::endl ;
+	  		}
+	  	}
+	  }
+	  if(isM){
+      	for(unsigned int itrig=0; itrig < vsSelMCTriggersMu_singleLepCalc->size(); itrig++){
+				if( viSelMCTriggersMu_singleLepCalc->at(itrig) >0 ){ 
+					isMCLepPassLepTrig=true;
+					std::cout << "Muon: pass trigger: " << vsSelMCTriggersMu_singleLepCalc->at(itrig) <<std::endl ;
+			}
+		}
+	  }
+	  
+	  //std::cout << "isMCLepPassLepTrig = " << isMCLepPassLepTrig << std::endl;
       if(isMC && isMCLepPassLepTrig==false) continue; // check if ele pass ele trig, mu pass mu trig.
 
       NTotalSLPassed->Fill(1.0,weight);
