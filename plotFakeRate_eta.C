@@ -1,4 +1,4 @@
-void plotFakeRate(){
+void plotFakeRate_eta(){
 
   TFile *f1= TFile::Open("root://cmseos.fnal.gov//store/user/lpcljm/LJMet_FakeRateTest_step1PtEtahadds_rizki/nominal/DYJetsToLL_M-50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8_hadd.root"); 
   TFile *f2= TFile::Open("root://cmseos.fnal.gov//store/user/lpcljm/LJMet_FakeRateTest_step1PtEtahadds_rizki/nominal/QCD_HT100to200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8_hadd.root");
@@ -32,100 +32,100 @@ void plotFakeRate(){
    NLooseMu_Pt = new TH1D("NLooseMu_Pt","",5,ptbins);
    NLooseEl_Eta = new TH1D("NLooseEl_Eta","",4,etabinsEl);
    NLooseMu_Eta = new TH1D("NLooseMu_Eta","",4,etabinsMu);
-   NLooseEl_PtEta = new TH2D("NLooseEl_PtEta","",5,ptbins,4,etabinsEl);
-   NLooseMu_PtEta = new TH2D("NLooseMu_PtEta","",5,ptbins,4,etabinsMu);
+   NLooseEl_Eta = new TH1D("NLooseEl_Eta","",5,ptbins,4,etabinsEl);
+   NLooseMu_Eta = new TH1D("NLooseMu_Eta","",5,ptbins,4,etabinsMu);
    NTightEl_Pt = new TH1D("NTightEl_Pt","",5,ptbins);
    NTightMu_Pt = new TH1D("NTightMu_Pt","",5,ptbins);
    NTightEl_Eta = new TH1D("NTightEl_Eta","",4,etabinsEl);
    NTightMu_Eta = new TH1D("NTightMu_Eta","",4,etabinsMu);
-   NTightEl_PtEta = new TH2D("NTightEl_PtEta","",5,ptbins,4,etabinsEl);
-   NTightMu_PtEta = new TH2D("NTightMu_PtEta","",5,ptbins,4,etabinsMu);
+   NTightEl_Eta = new TH1D("NTightEl_Eta","",5,ptbins,4,etabinsEl);
+   NTightMu_Eta = new TH1D("NTightMu_Eta","",5,ptbins,4,etabinsMu);
   */
 
-  TH2D *NLEl_DY = (TH2D*)f1->Get("NLooseEl_PtEta");
-  TH2D *NLMu_DY = (TH2D*)f1->Get("NLooseMu_PtEta");
-  TH2D *NTEl_DY = (TH2D*)f1->Get("NTightEl_PtEta");
-  TH2D *NTMu_DY = (TH2D*)f1->Get("NTightMu_PtEta");
+  TH1D *NLEl_DY = (TH1D*)f1->Get("NLooseEl_Eta");
+  TH1D *NLMu_DY = (TH1D*)f1->Get("NLooseMu_Eta");
+  TH1D *NTEl_DY = (TH1D*)f1->Get("NTightEl_Eta");
+  TH1D *NTMu_DY = (TH1D*)f1->Get("NTightMu_Eta");
 
-  TH2D *NLEl_WJ100 = (TH2D*)g1->Get("NLooseEl_PtEta");
-  TH2D *NLMu_WJ100 = (TH2D*)g1->Get("NLooseMu_PtEta");
-  TH2D *NTEl_WJ100 = (TH2D*)g1->Get("NTightEl_PtEta");
-  TH2D *NTMu_WJ100 = (TH2D*)g1->Get("NTightMu_PtEta");
-  TH2D *NLEl_WJ200 = (TH2D*)g2->Get("NLooseEl_PtEta");
-  TH2D *NLMu_WJ200 = (TH2D*)g2->Get("NLooseMu_PtEta");
-  TH2D *NTEl_WJ200 = (TH2D*)g2->Get("NTightEl_PtEta");
-  TH2D *NTMu_WJ200 = (TH2D*)g2->Get("NTightMu_PtEta");
-  TH2D *NLEl_WJ400 = (TH2D*)g3->Get("NLooseEl_PtEta");
-  TH2D *NLMu_WJ400 = (TH2D*)g3->Get("NLooseMu_PtEta");
-  TH2D *NTEl_WJ400 = (TH2D*)g3->Get("NTightEl_PtEta");
-  TH2D *NTMu_WJ400 = (TH2D*)g3->Get("NTightMu_PtEta");
-  TH2D *NLEl_WJ600 = (TH2D*)g4->Get("NLooseEl_PtEta");
-  TH2D *NLMu_WJ600 = (TH2D*)g4->Get("NLooseMu_PtEta");
-  TH2D *NTEl_WJ600 = (TH2D*)g4->Get("NTightEl_PtEta");
-  TH2D *NTMu_WJ600 = (TH2D*)g4->Get("NTightMu_PtEta");
-  TH2D *NLEl_WJ800 = (TH2D*)g5->Get("NLooseEl_PtEta");
-  TH2D *NLMu_WJ800 = (TH2D*)g5->Get("NLooseMu_PtEta");
-  TH2D *NTEl_WJ800 = (TH2D*)g5->Get("NTightEl_PtEta");
-  TH2D *NTMu_WJ800 = (TH2D*)g5->Get("NTightMu_PtEta");
-  TH2D *NLEl_WJ1200 = (TH2D*)g6->Get("NLooseEl_PtEta");
-  TH2D *NLMu_WJ1200 = (TH2D*)g6->Get("NLooseMu_PtEta");
-  TH2D *NTEl_WJ1200 = (TH2D*)g6->Get("NTightEl_PtEta");
-  TH2D *NTMu_WJ1200 = (TH2D*)g6->Get("NTightMu_PtEta");
-  TH2D *NLEl_WJ2500 = (TH2D*)g7->Get("NLooseEl_PtEta");
-  TH2D *NLMu_WJ2500 = (TH2D*)g7->Get("NLooseMu_PtEta");
-  TH2D *NTEl_WJ2500 = (TH2D*)g7->Get("NTightEl_PtEta");
-  TH2D *NTMu_WJ2500 = (TH2D*)g7->Get("NTightMu_PtEta");
+  TH1D *NLEl_WJ100 = (TH1D*)g1->Get("NLooseEl_Eta");
+  TH1D *NLMu_WJ100 = (TH1D*)g1->Get("NLooseMu_Eta");
+  TH1D *NTEl_WJ100 = (TH1D*)g1->Get("NTightEl_Eta");
+  TH1D *NTMu_WJ100 = (TH1D*)g1->Get("NTightMu_Eta");
+  TH1D *NLEl_WJ200 = (TH1D*)g2->Get("NLooseEl_Eta");
+  TH1D *NLMu_WJ200 = (TH1D*)g2->Get("NLooseMu_Eta");
+  TH1D *NTEl_WJ200 = (TH1D*)g2->Get("NTightEl_Eta");
+  TH1D *NTMu_WJ200 = (TH1D*)g2->Get("NTightMu_Eta");
+  TH1D *NLEl_WJ400 = (TH1D*)g3->Get("NLooseEl_Eta");
+  TH1D *NLMu_WJ400 = (TH1D*)g3->Get("NLooseMu_Eta");
+  TH1D *NTEl_WJ400 = (TH1D*)g3->Get("NTightEl_Eta");
+  TH1D *NTMu_WJ400 = (TH1D*)g3->Get("NTightMu_Eta");
+  TH1D *NLEl_WJ600 = (TH1D*)g4->Get("NLooseEl_Eta");
+  TH1D *NLMu_WJ600 = (TH1D*)g4->Get("NLooseMu_Eta");
+  TH1D *NTEl_WJ600 = (TH1D*)g4->Get("NTightEl_Eta");
+  TH1D *NTMu_WJ600 = (TH1D*)g4->Get("NTightMu_Eta");
+  TH1D *NLEl_WJ800 = (TH1D*)g5->Get("NLooseEl_Eta");
+  TH1D *NLMu_WJ800 = (TH1D*)g5->Get("NLooseMu_Eta");
+  TH1D *NTEl_WJ800 = (TH1D*)g5->Get("NTightEl_Eta");
+  TH1D *NTMu_WJ800 = (TH1D*)g5->Get("NTightMu_Eta");
+  TH1D *NLEl_WJ1200 = (TH1D*)g6->Get("NLooseEl_Eta");
+  TH1D *NLMu_WJ1200 = (TH1D*)g6->Get("NLooseMu_Eta");
+  TH1D *NTEl_WJ1200 = (TH1D*)g6->Get("NTightEl_Eta");
+  TH1D *NTMu_WJ1200 = (TH1D*)g6->Get("NTightMu_Eta");
+  TH1D *NLEl_WJ2500 = (TH1D*)g7->Get("NLooseEl_Eta");
+  TH1D *NLMu_WJ2500 = (TH1D*)g7->Get("NLooseMu_Eta");
+  TH1D *NTEl_WJ2500 = (TH1D*)g7->Get("NTightEl_Eta");
+  TH1D *NTMu_WJ2500 = (TH1D*)g7->Get("NTightMu_Eta");
 
-  TH2D *NLEl_QCD100 = (TH2D*)f2->Get("NLooseEl_PtEta");
-  TH2D *NLMu_QCD100 = (TH2D*)f2->Get("NLooseMu_PtEta");
-  TH2D *NTEl_QCD100 = (TH2D*)f2->Get("NTightEl_PtEta");
-  TH2D *NTMu_QCD100 = (TH2D*)f2->Get("NTightMu_PtEta");
-  TH2D *NLEl_QCD200 = (TH2D*)f3->Get("NLooseEl_PtEta");
-  TH2D *NLMu_QCD200 = (TH2D*)f3->Get("NLooseMu_PtEta");
-  TH2D *NTEl_QCD200 = (TH2D*)f3->Get("NTightEl_PtEta");
-  TH2D *NTMu_QCD200 = (TH2D*)f3->Get("NTightMu_PtEta");
-  TH2D *NLEl_QCD300 = (TH2D*)f4->Get("NLooseEl_PtEta");
-  TH2D *NLMu_QCD300 = (TH2D*)f4->Get("NLooseMu_PtEta");
-  TH2D *NTEl_QCD300 = (TH2D*)f4->Get("NTightEl_PtEta");
-  TH2D *NTMu_QCD300 = (TH2D*)f4->Get("NTightMu_PtEta");
-  TH2D *NLEl_QCD500 = (TH2D*)f5->Get("NLooseEl_PtEta");
-  TH2D *NLMu_QCD500 = (TH2D*)f5->Get("NLooseMu_PtEta");
-  TH2D *NTEl_QCD500 = (TH2D*)f5->Get("NTightEl_PtEta");
-  TH2D *NTMu_QCD500 = (TH2D*)f5->Get("NTightMu_PtEta");
-  TH2D *NLEl_QCD700 = (TH2D*)f6->Get("NLooseEl_PtEta");
-  TH2D *NLMu_QCD700 = (TH2D*)f6->Get("NLooseMu_PtEta");
-  TH2D *NTEl_QCD700 = (TH2D*)f6->Get("NTightEl_PtEta");
-  TH2D *NTMu_QCD700 = (TH2D*)f6->Get("NTightMu_PtEta");
-  TH2D *NLEl_QCD1000 = (TH2D*)f7->Get("NLooseEl_PtEta");
-  TH2D *NLMu_QCD1000 = (TH2D*)f7->Get("NLooseMu_PtEta");
-  TH2D *NTEl_QCD1000 = (TH2D*)f7->Get("NTightEl_PtEta");
-  TH2D *NTMu_QCD1000 = (TH2D*)f7->Get("NTightMu_PtEta");
-  TH2D *NLEl_QCD1500 = (TH2D*)f8->Get("NLooseEl_PtEta");
-  TH2D *NLMu_QCD1500 = (TH2D*)f8->Get("NLooseMu_PtEta");
-  TH2D *NTEl_QCD1500 = (TH2D*)f8->Get("NTightEl_PtEta");
-  TH2D *NTMu_QCD1500 = (TH2D*)f8->Get("NTightMu_PtEta");
+  TH1D *NLEl_QCD100 = (TH1D*)f2->Get("NLooseEl_Eta");
+  TH1D *NLMu_QCD100 = (TH1D*)f2->Get("NLooseMu_Eta");
+  TH1D *NTEl_QCD100 = (TH1D*)f2->Get("NTightEl_Eta");
+  TH1D *NTMu_QCD100 = (TH1D*)f2->Get("NTightMu_Eta");
+  TH1D *NLEl_QCD200 = (TH1D*)f3->Get("NLooseEl_Eta");
+  TH1D *NLMu_QCD200 = (TH1D*)f3->Get("NLooseMu_Eta");
+  TH1D *NTEl_QCD200 = (TH1D*)f3->Get("NTightEl_Eta");
+  TH1D *NTMu_QCD200 = (TH1D*)f3->Get("NTightMu_Eta");
+  TH1D *NLEl_QCD300 = (TH1D*)f4->Get("NLooseEl_Eta");
+  TH1D *NLMu_QCD300 = (TH1D*)f4->Get("NLooseMu_Eta");
+  TH1D *NTEl_QCD300 = (TH1D*)f4->Get("NTightEl_Eta");
+  TH1D *NTMu_QCD300 = (TH1D*)f4->Get("NTightMu_Eta");
+  TH1D *NLEl_QCD500 = (TH1D*)f5->Get("NLooseEl_Eta");
+  TH1D *NLMu_QCD500 = (TH1D*)f5->Get("NLooseMu_Eta");
+  TH1D *NTEl_QCD500 = (TH1D*)f5->Get("NTightEl_Eta");
+  TH1D *NTMu_QCD500 = (TH1D*)f5->Get("NTightMu_Eta");
+  TH1D *NLEl_QCD700 = (TH1D*)f6->Get("NLooseEl_Eta");
+  TH1D *NLMu_QCD700 = (TH1D*)f6->Get("NLooseMu_Eta");
+  TH1D *NTEl_QCD700 = (TH1D*)f6->Get("NTightEl_Eta");
+  TH1D *NTMu_QCD700 = (TH1D*)f6->Get("NTightMu_Eta");
+  TH1D *NLEl_QCD1000 = (TH1D*)f7->Get("NLooseEl_Eta");
+  TH1D *NLMu_QCD1000 = (TH1D*)f7->Get("NLooseMu_Eta");
+  TH1D *NTEl_QCD1000 = (TH1D*)f7->Get("NTightEl_Eta");
+  TH1D *NTMu_QCD1000 = (TH1D*)f7->Get("NTightMu_Eta");
+  TH1D *NLEl_QCD1500 = (TH1D*)f8->Get("NLooseEl_Eta");
+  TH1D *NLMu_QCD1500 = (TH1D*)f8->Get("NLooseMu_Eta");
+  TH1D *NTEl_QCD1500 = (TH1D*)f8->Get("NTightEl_Eta");
+  TH1D *NTMu_QCD1500 = (TH1D*)f8->Get("NTightMu_Eta");
 
-  TH2D *NLEl_DMC = (TH2D*)h1->Get("NLooseEl_PtEta");
-  TH2D *NLMu_DMC = (TH2D*)h1->Get("NLooseMu_PtEta");
-  TH2D *NTEl_DMC = (TH2D*)h1->Get("NTightEl_PtEta");
-  TH2D *NTMu_DMC = (TH2D*)h1->Get("NTightMu_PtEta");
-  TH2D *NLEl_DMD = (TH2D*)h2->Get("NLooseEl_PtEta");
-  TH2D *NLMu_DMD = (TH2D*)h2->Get("NLooseMu_PtEta");
-  TH2D *NTEl_DMD = (TH2D*)h2->Get("NTightEl_PtEta");
-  TH2D *NTMu_DMD = (TH2D*)h2->Get("NTightMu_PtEta");
-  TH2D *NLEl_DEC = (TH2D*)h3->Get("NLooseEl_PtEta");
-  TH2D *NLMu_DEC = (TH2D*)h3->Get("NLooseMu_PtEta");
-  TH2D *NTEl_DEC = (TH2D*)h3->Get("NTightEl_PtEta");
-  TH2D *NTMu_DEC = (TH2D*)h3->Get("NTightMu_PtEta");
-  TH2D *NLEl_DED = (TH2D*)h4->Get("NLooseEl_PtEta");
-  TH2D *NLMu_DED = (TH2D*)h4->Get("NLooseMu_PtEta");
-  TH2D *NTEl_DED = (TH2D*)h4->Get("NTightEl_PtEta");
-  TH2D *NTMu_DED = (TH2D*)h4->Get("NTightMu_PtEta");
+  TH1D *NLEl_DMC = (TH1D*)h1->Get("NLooseEl_Eta");
+  TH1D *NLMu_DMC = (TH1D*)h1->Get("NLooseMu_Eta");
+  TH1D *NTEl_DMC = (TH1D*)h1->Get("NTightEl_Eta");
+  TH1D *NTMu_DMC = (TH1D*)h1->Get("NTightMu_Eta");
+  TH1D *NLEl_DMD = (TH1D*)h2->Get("NLooseEl_Eta");
+  TH1D *NLMu_DMD = (TH1D*)h2->Get("NLooseMu_Eta");
+  TH1D *NTEl_DMD = (TH1D*)h2->Get("NTightEl_Eta");
+  TH1D *NTMu_DMD = (TH1D*)h2->Get("NTightMu_Eta");
+  TH1D *NLEl_DEC = (TH1D*)h3->Get("NLooseEl_Eta");
+  TH1D *NLMu_DEC = (TH1D*)h3->Get("NLooseMu_Eta");
+  TH1D *NTEl_DEC = (TH1D*)h3->Get("NTightEl_Eta");
+  TH1D *NTMu_DEC = (TH1D*)h3->Get("NTightMu_Eta");
+  TH1D *NLEl_DED = (TH1D*)h4->Get("NLooseEl_Eta");
+  TH1D *NLMu_DED = (TH1D*)h4->Get("NLooseMu_Eta");
+  TH1D *NTEl_DED = (TH1D*)h4->Get("NTightEl_Eta");
+  TH1D *NTMu_DED = (TH1D*)h4->Get("NTightMu_Eta");
 
-  TH2D *NLEl_TT = (TH2D*)h5->Get("NLooseEl_PtEta");
-  TH2D *NLMu_TT = (TH2D*)h5->Get("NLooseMu_PtEta");
-  TH2D *NTEl_TT = (TH2D*)h5->Get("NTightEl_PtEta");
-  TH2D *NTMu_TT = (TH2D*)h5->Get("NTightMu_PtEta");
+  TH1D *NLEl_TT = (TH1D*)h5->Get("NLooseEl_Eta");
+  TH1D *NLMu_TT = (TH1D*)h5->Get("NLooseMu_Eta");
+  TH1D *NTEl_TT = (TH1D*)h5->Get("NTightEl_Eta");
+  TH1D *NTMu_TT = (TH1D*)h5->Get("NTightMu_Eta");
   
   double scale_WJ100 = 201.4*1345.0*1.21/10205377.;
   double scale_WJ200 = 201.4*359.7*1.21/4949568.;
@@ -221,16 +221,16 @@ void plotFakeRate(){
   NLEl_DEC->Add(NLEl_DMC);  NLMu_DEC->Add(NLMu_DMC);
   NLEl_DEC->Add(NLEl_DMD);  NLMu_DEC->Add(NLMu_DMD);
 
-  TH2D *NREl_WJ100 = (TH2D*)NTEl_WJ100->Clone("NREl_WJ100");
-  TH2D *NRMu_WJ100 = (TH2D*)NTMu_WJ100->Clone("NRMu_WJ100");
-  TH2D *NREl_QCD100 = (TH2D*)NTEl_QCD100->Clone("NREl_QCD100");
-  TH2D *NRMu_QCD100 = (TH2D*)NTMu_QCD100->Clone("NRMu_QCD100");
-  TH2D *NREl_DY = (TH2D*)NTEl_DY->Clone("NREl_DY");
-  TH2D *NRMu_DY = (TH2D*)NTMu_DY->Clone("NRMu_DY");
-  TH2D *NREl_TT = (TH2D*)NTEl_TT->Clone("NREl_TT");
-  TH2D *NRMu_TT = (TH2D*)NTMu_TT->Clone("NRMu_TT");
-  TH2D *NREl_DEC = (TH2D*)NTEl_DEC->Clone("NREl_DEC");
-  TH2D *NRMu_DEC = (TH2D*)NTMu_DEC->Clone("NRMu_DEC");
+  TH1D *NREl_WJ100 = (TH1D*)NTEl_WJ100->Clone("NREl_WJ100");
+  TH1D *NRMu_WJ100 = (TH1D*)NTMu_WJ100->Clone("NRMu_WJ100");
+  TH1D *NREl_QCD100 = (TH1D*)NTEl_QCD100->Clone("NREl_QCD100");
+  TH1D *NRMu_QCD100 = (TH1D*)NTMu_QCD100->Clone("NRMu_QCD100");
+  TH1D *NREl_DY = (TH1D*)NTEl_DY->Clone("NREl_DY");
+  TH1D *NRMu_DY = (TH1D*)NTMu_DY->Clone("NRMu_DY");
+  TH1D *NREl_TT = (TH1D*)NTEl_TT->Clone("NREl_TT");
+  TH1D *NRMu_TT = (TH1D*)NTMu_TT->Clone("NRMu_TT");
+  TH1D *NREl_DEC = (TH1D*)NTEl_DEC->Clone("NREl_DEC");
+  TH1D *NRMu_DEC = (TH1D*)NTMu_DEC->Clone("NRMu_DEC");
 
   NREl_WJ100->Divide(NLEl_WJ100);    NRMu_WJ100->Divide(NLMu_WJ100);  
   NREl_QCD100->Divide(NLEl_QCD100);  NRMu_QCD100->Divide(NLMu_QCD100);
@@ -242,76 +242,88 @@ void plotFakeRate(){
   gStyle->SetPalette(1);
 
   NREl_WJ100->Draw("colz");  
-  c1->SaveAs("FakeRatePlots/FakeRate_WJets_El_PtEta.C");
-  c1->SaveAs("FakeRatePlots/FakeRate_WJets_El_PtEta.png");
+  c1->SaveAs("FakeRatePlots/FakeRate_WJets_El_Eta.C");
+  c1->SaveAs("FakeRatePlots/FakeRate_WJets_El_Eta.png");
 
   NRMu_WJ100->Draw("colz");
-  c1->SaveAs("FakeRatePlots/FakeRate_WJets_Mu_PtEta.C");
-  c1->SaveAs("FakeRatePlots/FakeRate_WJets_Mu_PtEta.png");
+  c1->SaveAs("FakeRatePlots/FakeRate_WJets_Mu_Eta.C");
+  c1->SaveAs("FakeRatePlots/FakeRate_WJets_Mu_Eta.png");
 
   NREl_QCD100->Draw("colz");  
-  c1->SaveAs("FakeRatePlots/FakeRate_QCD_El_PtEta.C");
-  c1->SaveAs("FakeRatePlots/FakeRate_QCD_El_PtEta.png");
+  c1->SaveAs("FakeRatePlots/FakeRate_QCD_El_Eta.C");
+  c1->SaveAs("FakeRatePlots/FakeRate_QCD_El_Eta.png");
 
   NRMu_QCD100->Draw("colz");
-  c1->SaveAs("FakeRatePlots/FakeRate_QCD_Mu_PtEta.C");
-  c1->SaveAs("FakeRatePlots/FakeRate_QCD_Mu_PtEta.png");
+  c1->SaveAs("FakeRatePlots/FakeRate_QCD_Mu_Eta.C");
+  c1->SaveAs("FakeRatePlots/FakeRate_QCD_Mu_Eta.png");
 
   NREl_DY->Draw("colz");  
-  c1->SaveAs("FakeRatePlots/FakeRate_DY_El_PtEta.C");
-  c1->SaveAs("FakeRatePlots/FakeRate_DY_El_PtEta.png");
+  c1->SaveAs("FakeRatePlots/FakeRate_DY_El_Eta.C");
+  c1->SaveAs("FakeRatePlots/FakeRate_DY_El_Eta.png");
 
   NRMu_DY->Draw("colz");
-  c1->SaveAs("FakeRatePlots/FakeRate_DY_Mu_PtEta.C");
-  c1->SaveAs("FakeRatePlots/FakeRate_DY_Mu_PtEta.png");
+  c1->SaveAs("FakeRatePlots/FakeRate_DY_Mu_Eta.C");
+  c1->SaveAs("FakeRatePlots/FakeRate_DY_Mu_Eta.png");
 
   NREl_TT->Draw("colz");  
-  c1->SaveAs("FakeRatePlots/FakeRate_TT_El_PtEta.C");
-  c1->SaveAs("FakeRatePlots/FakeRate_TT_El_PtEta.png");
+  c1->SaveAs("FakeRatePlots/FakeRate_TT_El_Eta.C");
+  c1->SaveAs("FakeRatePlots/FakeRate_TT_El_Eta.png");
 
   NRMu_TT->Draw("colz");
-  c1->SaveAs("FakeRatePlots/FakeRate_TT_Mu_PtEta.C");
-  c1->SaveAs("FakeRatePlots/FakeRate_TT_Mu_PtEta.png");
+  c1->SaveAs("FakeRatePlots/FakeRate_TT_Mu_Eta.C");
+  c1->SaveAs("FakeRatePlots/FakeRate_TT_Mu_Eta.png");
 
   NREl_DEC->Draw("colz");  
-  c1->SaveAs("FakeRatePlots/FakeRate_Data_El_PtEta.C");
-  c1->SaveAs("FakeRatePlots/FakeRate_Data_El_PtEta.png");
+  c1->SaveAs("FakeRatePlots/FakeRate_Data_El_Eta.C");
+  c1->SaveAs("FakeRatePlots/FakeRate_Data_El_Eta.png");
 
   NRMu_DEC->Draw("colz");
-  c1->SaveAs("FakeRatePlots/FakeRate_Data_Mu_PtEta.C");
-  c1->SaveAs("FakeRatePlots/FakeRate_Data_Mu_PtEta.png");
+  c1->SaveAs("FakeRatePlots/FakeRate_Data_Mu_Eta.C");
+  c1->SaveAs("FakeRatePlots/FakeRate_Data_Mu_Eta.png");
 
-  TH2D *newtightEl = (TH2D*)NTEl_DEC->Clone("newtightEl");
-  TH2D *newlooseEl = (TH2D*)NLEl_DEC->Clone("newlooseEl");
+  TH1D *newtightEl = (TH1D*)NTEl_DEC->Clone("newtightEl");
+  TH1D *newlooseEl = (TH1D*)NLEl_DEC->Clone("newlooseEl");
   newtightEl->Add(NTEl_WJ100,-1);
   newtightEl->Add(NTEl_DY,-1);
   newtightEl->Add(NTEl_TT,-1);
   //  newlooseEl->Add(NLEl_WJ100,-1);
   //  newlooseEl->Add(NLEl_DY,-1);
   //  newlooseEl->Add(NLEl_TT,-1);
-  TH2D *newratioEl = (TH2D*)newtightEl->Clone("newratioEl");
+  TH1D *newratioEl = (TH1D*)newtightEl->Clone("newratioEl");
   newratioEl->Divide(newlooseEl);
 
-  TH2D *newtightMu = (TH2D*)NTMu_DEC->Clone("newtightMu");
-  TH2D *newlooseMu = (TH2D*)NLMu_DEC->Clone("newlooseMu");
+  TH1D *newtightMu = (TH1D*)NTMu_DEC->Clone("newtightMu");
+  TH1D *newlooseMu = (TH1D*)NLMu_DEC->Clone("newlooseMu");
   newtightMu->Add(NTMu_WJ100,-1);
   newtightMu->Add(NTMu_DY,-1);
   newtightMu->Add(NTMu_TT,-1);
   //  newlooseMu->Add(NLMu_WJ100,-1);
   //  newlooseMu->Add(NLMu_DY,-1);
   //  newlooseMu->Add(NLMu_TT,-1);
-  TH2D *newratioMu = (TH2D*)newtightMu->Clone("newratioMu");
+  TH1D *newratioMu = (TH1D*)newtightMu->Clone("newratioMu");
   newratioMu->Divide(newlooseMu);
 
+  TH1D *ratio_QCDdata_el = (TH1D*)newratioEl->Clone("ratio_QCDdata_el");
+  ratio_QCDdata_el->Divide(NREl_QCD100);
+
+  TH1D *ratio_QCDdata_mu = (TH1D*)newratioMu->Clone("ratio_QCDdata_mu");
+  ratio_QCDdata_mu->Divide(NRMu_QCD100);
+
   newratioEl->Draw("colz");  
-  c1->SaveAs("FakeRatePlots/FakeRate_Data_subtr_El_PtEta.C");
-  c1->SaveAs("FakeRatePlots/FakeRate_Data_subtr_El_PtEta.png");
-  c1->SaveAs("FakeRatePlots/FakeRate_Data_subtr_El_PtEta.root");
+  c1->SaveAs("FakeRatePlots/FakeRate_Data_subtr_El_Eta.C");
+  c1->SaveAs("FakeRatePlots/FakeRate_Data_subtr_El_Eta.png");
 
   newratioMu->Draw("colz");
-  c1->SaveAs("FakeRatePlots/FakeRate_Data_subtr_Mu_PtEta.C");
-  c1->SaveAs("FakeRatePlots/FakeRate_Data_subtr_Mu_PtEta.png");
-  c1->SaveAs("FakeRatePlots/FakeRate_Data_subtr_Mu_PtEta.root");
+  c1->SaveAs("FakeRatePlots/FakeRate_Data_subtr_Mu_Eta.C");
+  c1->SaveAs("FakeRatePlots/FakeRate_Data_subtr_Mu_Eta.png");
+  
+  ratio_QCDdata_el->Draw();
+  c1->SaveAs("FakeRatePlots/FakeRate_ratio_QCDData_subtr_El_Eta.C");
+  c1->SaveAs("FakeRatePlots/FakeRate_ratio_QCDData_subtr_El_Eta.png");
+
+  ratio_QCDdata_mu->Draw();
+  c1->SaveAs("FakeRatePlots/FakeRate_ratio_QCDData_subtr_Mu_Eta.C");
+  c1->SaveAs("FakeRatePlots/FakeRate_ratio_QCDData_subtr_Mu_Eta.png");
 
   NREl_TT->GetYaxis()->SetRangeUser(0,1);
   NREl_TT->SetLineColor(kBlue);
@@ -322,14 +334,23 @@ void plotFakeRate(){
   newratioEl->SetLineColor(kBlack);
   newratioEl->SetLineStyle(5);
 
+  leg_El = new TLegend(0.9-0.38,0.1+0.5,0.9,0.1+0.2+0.5);
+  leg_El->AddEntry(NREl_TT,"top","lep");
+  leg_El->AddEntry(NREl_WJ100,"W","lep");
+  leg_El->AddEntry(NREl_DY,"DY","lep");
+  leg_El->AddEntry(NREl_QCD100,"QCD","lep");
+  leg_El->AddEntry(NREl_DEC,"Data","lep");
+  leg_El->AddEntry(newratioEl,"Data (subtracted)","lep");
+
   NREl_TT->Draw();
   NREl_WJ100->Draw("same");
   NREl_DY->Draw("same");
   NREl_QCD100->Draw("same");
   NREl_DEC->Draw("same");
   newratioEl->Draw("same");
-  c1->SaveAs("FakeRatePlots/FakeRate_All_El_PtEta.C");
-  c1->SaveAs("FakeRatePlots/FakeRate_All_El_PtEta.png");
+  leg_El->Draw("same");
+  c1->SaveAs("FakeRatePlots/FakeRate_All_El_Eta.C");
+  c1->SaveAs("FakeRatePlots/FakeRate_All_El_Eta.png");
 
   NRMu_TT->GetYaxis()->SetRangeUser(0,1);
   NRMu_TT->SetLineColor(kBlue);
@@ -340,14 +361,23 @@ void plotFakeRate(){
   newratioMu->SetLineColor(kBlack);
   newratioMu->SetLineStyle(5);
 
+  leg_Mu = new TLegend(0.9-0.38,0.1,0.9,0.1+0.2);
+  leg_Mu->AddEntry(NREl_TT,"top","lep");
+  leg_Mu->AddEntry(NREl_WJ100,"W","lep");
+  leg_Mu->AddEntry(NREl_DY,"DY","lep");
+  leg_Mu->AddEntry(NREl_QCD100,"QCD","lep");
+  leg_Mu->AddEntry(NREl_DEC,"Data","lep");
+  leg_Mu->AddEntry(newratioEl,"Data (subtracted)","lep");
+
   NRMu_TT->Draw();
   NRMu_WJ100->Draw("same");
   NRMu_DY->Draw("same");
   NRMu_QCD100->Draw("same");
   NRMu_DEC->Draw("same");
   newratioMu->Draw("same");
-  c1->SaveAs("FakeRatePlots/FakeRate_All_Mu_PtEta.C");
-  c1->SaveAs("FakeRatePlots/FakeRate_All_Mu_PtEta.png");
+  leg_Mu->Draw("same");
+  c1->SaveAs("FakeRatePlots/FakeRate_All_Mu_Eta.C");
+  c1->SaveAs("FakeRatePlots/FakeRate_All_Mu_Eta.png");
 
   for(int i = 1; i < NREl_WJ100->GetNbinsX()+1; i++){
     for(int j = 1; j < NREl_WJ100->GetNbinsY()+1; j++){
